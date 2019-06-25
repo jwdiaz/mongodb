@@ -1,0 +1,55 @@
+<div class="container">
+
+    <h2>Ver Curso en sistema</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Id Curso</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Intensidad</th>
+                        <th scope="col">Modalidad</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each Cursos}}
+                    <tr>
+                        <th scope="row"><a href="/ver-curso/{{idCurso}}">{{idCurso}}</a></th>
+
+                        <td><a href="/ver-curso/{{ idCurso }}">{{nombre}}</a></td>
+                        <td>{{descripcion}}</td>
+                        <td>${{valor}}</td>
+                        <td>
+                            {{#if intensidad}}
+                            {{intensidad}} horas
+                            {{/if}}
+                        </td>
+                        <td>{{modalidad}}</td>
+                        <th scope="row"><a href="/estado-curso/{{ _id }}/{{ estado }}">{{ estado }}</a></th>
+                        <th scope="row"><a href="/actualizarCurso/{{ _id }}">Actualizar</a></th>
+                        <th scope="row"><a href="/eliminar-curso/{{ _id}}">Eliminar</a></th>
+
+
+                    </tr>
+                    {{else}}
+                    <div class="card mx-auto">
+                        <div class="card-body">
+                            <h1>Hola</h1>
+                            <p clsss="lead">Actualmente no se encuentran cursos registrados en el sistema.</p>
+                            <a href="/new-curso" class="btn btn-success btn-block">Crear curso!</a>
+                        </div>
+                    </div>
+                    {{/each}}
+                </tbody>
+            </table>
+            <hr />
+        </div>
+
+    </div>
+</div>

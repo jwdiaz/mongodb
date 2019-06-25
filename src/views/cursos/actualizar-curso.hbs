@@ -1,0 +1,61 @@
+<div class="container p-4">
+     <h2>Actualizar datos curso</h2>
+<hr />
+ 
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+        
+            <form action="/cursos/actualizar/{{ curso._id }}?_method=PUT" method="post">
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="idCurso">Id Curso * </label>
+                        <input type="text" class="form-control" id="idCurso" name="idCurso" value = "{{ curso.idCurso }}"placeholder="Id Curso" readonly="readonly"
+                            required>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="nombre">Nombre * </label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" value = "{{ curso.nombre }}" placeholder="Nombre" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="descripcion">Descripción * </label>
+                        <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Descripción"
+                            required> {{ curso.descripcion }}</textarea>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="valor">Valor ($) *</label>
+                        <input type="number" class="form-control" id="valor" name="valor" value = "{{ curso.valor }}"placeholder="Valor" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="modalidad">Modalidad</label>
+                        <select class="form-control" id="modalidad" name="modalidad"> 
+                            <option value="virtual">Virtual</option>
+                            <option value="presencial">Presencial</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="intensidadHoraria">Intensidad Horaria (horas)</label>
+                        <input type="text" class="form-control" id="intensidadHoraria" value = "{{ curso.intesidad }}" name="intensidadHoraria"
+                            placeholder="Intensidad Horaria">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="modalidad">Estado</label>
+                        <select class="form-control" id="estado" name="estado"> 
+                            <option value="disponible">Disponible</option>
+                            <option value="cerrado">Cerrado</option>
+                        </select>
+                    </div>
+                   </div> 
+                <button type="submit" class="btn btn-primary px-4 float-right">Guardar</button>
+            </form>
+        
+    
+    </div>
+  
+
+</div>

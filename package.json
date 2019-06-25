@@ -7,17 +7,9 @@
     "dev": "nodemon src/index.js",
     "start": "node src/index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jwdiaz/mongodb.git"
-  },
-  "author": "jamesDiaz",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jwdiaz/mongodb/issues"
-  },
-  "homepage": "https://github.com/jwdiaz/mongodb#readme",
+  
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",

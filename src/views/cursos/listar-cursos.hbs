@@ -1,0 +1,36 @@
+<section class="card">
+    <div class="card-body">
+        <h2>Listar Cursos</h2>
+        <hr />
+        
+            <div class="row">
+                {{#each curso}}
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <a href="/ver-curso/{{idCurso}}">
+                                <h3 class="card-title text-uppercase">
+                                    {{ nombre }}
+                                </h3>
+                            </a>
+                            <p class="m-2">{{descripcion}}</p>
+                            <p class="text-muted">
+                                Inversión: $ {{ valor }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {{else}}
+                    <div class="card mx-auto">
+                        <div class="card-body">
+                            <h1>Bienvenido.</h1>
+                            <p clsss="lead">Actualmente no se encuentran cursos registrados en el sistema.</p>
+                        </div>
+                    </div>
+
+                {{/each}}
+            </div>
+       
+
+    </div>
+</section>

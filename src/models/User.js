@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-//const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 
 const Usuario = new Schema({
   documento: { type: String, required: true },
   nombre: { type: String, required: true },
   correo: { type: String, required: true },
-  telefono: { type: String, required: true },
+  telefono: { type: String },
   password: { type: String, required: true },
-  tipo: { type: String, required: true },
-  date: { type: Date, default: Date.now }
+  tipo: { type: String, required: true }
 });
 
 Usuario.methods.encryptPassword = async (password) => {

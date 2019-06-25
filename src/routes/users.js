@@ -1,55 +1,55 @@
-const router = require('express').Router();
-const passport = require('passport');
+const router = require("express").Router();
+const passport = require("passport");
 
 // Models
-const User = require('../models/User');
+const Usuario = require("../models/User");
 
-router.get('/users/signup', (req, res) => {
-  res.render('users/signup');
+router.get("/users/signup", (req, res) => {
+  res.render("users/signup");
 });
 
-router.post('/users/signup', async (req, res) => {
-  let errors = [];
-  const { name, email, password, confirm_password } = req.body;
-  if(password != confirm_password) {
-    errors.push({text: 'La contraseña no es igual.'});
-  }
-  if(password.length < 4) {
-    errors.push({text: 'La contraseña debe ser mayor de 4 caracteres.'})
-  }
-  if(errors.length > 0){
-    res.render('users/signup', {errors, name, email, password, confirm_password});
+router.post("/users/signup", async (req, res) => {
+  const exiUsuario = await Usuario.findOne({ documento: req.body.documento });
+  if (exiUsuario) {
+    req.flash(
+      "error_msg",
+      "Ya exite el usuario con documento :" + req.body.documento
+    );
+    res.redirect("/users/signup");
   } else {
-    // Look for email coincidence
-    const emailUser = await User.findOne({email: email});
-    if(emailUser) {
-      req.flash('error_msg', 'The Email is already in use.');
-      res.redirect('/users/signup');
-    } else {
-      // Saving a New User
-      const newUser = new User({name, email, password});
-      newUser.password = await newUser.encryptPassword(password);
-      await newUser.save();
-      req.flash('success_msg', 'You are registered.');
-      res.redirect('/users/signin');
-    }
+    // Saving a New User
+    const newUser = new Usuario({
+      documento: req.body.documento,
+      nombre: req.body.nombre,
+      correo: req.body.correo,
+      telefono: req.body.telefono,
+      password: req.body.password,
+      tipo: "aspirante"
+    });
+    newUser.password = await newUser.encryptPassword(req.body.password);
+    await newUser.save();
+    req.flash("success_msg", "Registro de Usuario exitoso.");
+    res.redirect("/users/signin");
   }
 });
 
-router.get('/users/signin', (req, res) => {
-  res.render('users/signin');
+router.get("/users/signin", (req, res) => {
+  res.render("users/signin");
 });
 
-router.post('/users/signin', passport.authenticate('local', {
-  successRedirect: '/notes',
-  failureRedirect: '/users/signin',
-  failureFlash: true
-}));
+router.post(
+  "/users/signin",
+  passport.authenticate("local", {
+    successRedirect: "/ver-cursos",
+    failureRedirect: "/users/signin",
+    failureFlash: true
+  })
+);
 
-router.get('/users/logout', (req, res) => {
+router.get("/users/logout", (req, res) => {
   req.logout();
-  req.flash('success_msg', 'You are logged out now.');
-  res.redirect('/users/signin');
+  req.flash("success_msg", "Estás desconectado ahora.");
+  res.redirect("/users/signin");
 });
 
 module.exports = router;

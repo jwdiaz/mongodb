@@ -5,8 +5,7 @@ router.get('/', (req, res) => {
   res.render('index');
 });
 
-router.get('/cursos', (req, res) => {
-  res.render('cursos');
-});
+
+
 
 module.exports = router;
