@@ -1,0 +1,57 @@
+<div class="container p-4">
+    <h2>Actualizar datos de usuario</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <form action="/users/actualizar/{{ users._id }}?_method=PUT" method="post">
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="nombre">Documento Identidad * </label>
+                        <input type="text" class="form-control" id="documento" name="documento"
+                            placeholder="Documento Identidad" value="{{  users.documento }}" readonly="readonly">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="nombre">Nombre * </label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"
+                            value="{{  users.nombre }}">
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="modalidad">Teléfono * </label>
+                        <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono"
+                            value="{{  users.telefono }}">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="nombre">Correo * </label>
+                        <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo"
+                            value="{{ users.correo }}">
+                    </div>
+                </div>
+
+                <select class="form-group row">
+                    <select class="col-sm-6">
+                        <label for="tipo">Rol de usuario</label>
+                        <select class="form-control" id="tipo" name="tipo">
+                            <option value="Aspirante">Aspirante</option>
+                            <option value="Docente">Docente</option>
+                            
+                        </select>
+                    </select>
+                </select>
+
+
+
+                <div class="col-sm-6">
+                    &nbsp;
+                </div>
+
+                <button type="submit" class="btn btn-primary px-4 float-right">Guardar</button>
+
+            </form>
+        </div>
+    </div>
+</div>

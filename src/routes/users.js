@@ -5,7 +5,14 @@ const passport = require("passport");
 const Usuario = require("../models/User");
 
 router.get("/users/signup", (req, res) => {
+
   res.render("users/signup");
+});
+
+router.get("/users/listar", async(req, res) => {
+
+  const users = await Usuario.find();
+  res.render("users/listar-usuarios",{users});
 });
 
 router.post("/users/signup", async (req, res) => {
@@ -24,7 +31,7 @@ router.post("/users/signup", async (req, res) => {
       correo: req.body.correo,
       telefono: req.body.telefono,
       password: req.body.password,
-      tipo: "aspirante"
+      tipo: "Aspirante"
     });
     newUser.password = await newUser.encryptPassword(req.body.password);
     await newUser.save();
@@ -51,5 +58,22 @@ router.get("/users/logout", (req, res) => {
   req.flash("success_msg", "Estás desconectado ahora.");
   res.redirect("/users/signin");
 });
+
+
+router.get("/actualizarUsuario/:id", async (req, res) => {
+  const users = await Usuario.findById(req.params.id);
+ 
+  res.render("users/actualizar-usuario",{users});
+});
+
+
+router.put("/users/actualizar/:id", async (req, res) => {
+  const {documento, nombre, correo, telefono, tipo }= req.body;
+  await Usuario.findByIdAndUpdate(req.params.id, {documento, nombre, correo, telefono, tipo });
+  req.flash('success_msg', 'Actualizacion de usuario exitosa');
+  res.redirect("/users/listar");
+  
+});
+
 
 module.exports = router;

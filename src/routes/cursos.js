@@ -84,6 +84,7 @@ router.post("/cursos/new", async (req, res) => {
   }
 });
 
+
 router.put("/cursos/actualizar/:id", async (req, res) => {
   const {idCurso, nombre, descripcion, valor, modalidad, intensidadHoraria,estado} = req.body;
   await Curso.findByIdAndUpdate(req.params.id, {idCurso, nombre, descripcion, valor, modalidad, intensidadHoraria,estado});
