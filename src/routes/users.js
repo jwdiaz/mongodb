@@ -5,14 +5,12 @@ const passport = require("passport");
 const Usuario = require("../models/User");
 
 router.get("/users/signup", (req, res) => {
-
   res.render("users/signup");
 });
 
-router.get("/users/listar", async(req, res) => {
-
+router.get("/users/listar", async (req, res) => {
   const users = await Usuario.find();
-  res.render("users/listar-usuarios",{users});
+  res.render("users/listar-usuarios", { users });
 });
 
 router.post("/users/signup", async (req, res) => {
@@ -30,8 +28,7 @@ router.post("/users/signup", async (req, res) => {
       nombre: req.body.nombre,
       correo: req.body.correo,
       telefono: req.body.telefono,
-      password: req.body.password,
-      tipo: "Aspirante"
+      password: req.body.password
     });
     newUser.password = await newUser.encryptPassword(req.body.password);
     await newUser.save();
@@ -44,12 +41,11 @@ router.get("/users/signin", (req, res) => {
   res.render("users/signin");
 });
 
-router.post(
-  "/users/signin",
-  passport.authenticate("local", {
+router.post("/users/signin", passport.authenticate("local", {
     successRedirect: "/ver-cursos",
     failureRedirect: "/users/signin",
-    failureFlash: true
+    failureFlash: true,
+    
   })
 );
 
@@ -59,21 +55,23 @@ router.get("/users/logout", (req, res) => {
   res.redirect("/users/signin");
 });
 
-
 router.get("/actualizarUsuario/:id", async (req, res) => {
   const users = await Usuario.findById(req.params.id);
- 
-  res.render("users/actualizar-usuario",{users});
-});
 
+  res.render("users/actualizar-usuario", { users });
+});
 
 router.put("/users/actualizar/:id", async (req, res) => {
-  const {documento, nombre, correo, telefono, tipo }= req.body;
-  await Usuario.findByIdAndUpdate(req.params.id, {documento, nombre, correo, telefono, tipo });
-  req.flash('success_msg', 'Actualizacion de usuario exitosa');
+  const { documento, nombre, correo, telefono, tipo } = req.body;
+  await Usuario.findByIdAndUpdate(req.params.id, {
+    documento,
+    nombre,
+    correo,
+    telefono,
+    tipo
+  });
+  req.flash("success_msg", "Actualizacion de usuario exitosa");
   res.redirect("/users/listar");
-  
 });
-
 
 module.exports = router;

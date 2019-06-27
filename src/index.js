@@ -43,6 +43,7 @@ app.use((req, res, next) => {
   res.locals.error_msg = req.flash("error_msg");
   res.locals.error = req.flash("error");
   res.locals.user = req.user || null;
+  //res.locals.admi =  req.admi || false;
   next();
 });
 
@@ -50,6 +51,7 @@ app.use((req, res, next) => {
 app.use(require("./routes"));
 app.use(require("./routes/users"));
 app.use(require("./routes/cursos"));
+app.use(require("./routes/inscripcion"));
 
 app.use(express.static(path.join(__dirname, "public")));
 

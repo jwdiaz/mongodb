@@ -27,7 +27,7 @@ const CursoSchema = new Schema({
   },
   estado: {
     type: String,
-    required: true
+    default: "Disponible"
   }
 });
 

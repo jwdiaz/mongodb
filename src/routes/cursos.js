@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-
+const {isAuthenticated} = require('../helpers/auth');
 // Models
 const Curso = require("../models/Curso");
 
+
 router.get("/cursos", async (req, res) => {
   const curso = await Curso.find({
-    estado: "disponible"
+    estado: "Disponible"
   }).sort({
     nombre: 1
   });
@@ -39,9 +40,10 @@ router.get("/ver-cursos", async (req, res) => {
   });
 });
 
-router.get("/estado-cursos/:id/:estado", async (req, res) => {
+router.get("/estado-cursos/:id", async (req, res) => {
   const id = req.params.id;
   const Cursos = await Curso.find();
+  res.send('ok asiganr estado curso');
   
   res.redirect("/ver-cursos");
 });
@@ -74,8 +76,7 @@ router.post("/cursos/new", async (req, res) => {
       descripcion: body["descripcion"],
       valor: body["valor"],
       intensidad: body["intensidadHoraria"],
-      modalidad: body["modalidad"],
-      estado: "disponible"
+      modalidad: body["modalidad"]
     });
     await newCurso.save();
     req.flash('success_msg', 'Registro de Curso exitoso.');

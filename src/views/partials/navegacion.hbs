@@ -34,6 +34,9 @@
 
           </div>
         </li>
+
+
+    
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -49,7 +52,8 @@
 
           </div>
         </li>
-        <span class="navbar-brand  ">Conectado como :  {{ user.nombre }}.</span>
+        
+        <span class="navbar-brand  ">Conectado como :  {{ user.nombre }} - Perfil : {{ user.tipo}}.</span>
       
           
             <li class="nav-item">
@@ -57,6 +61,7 @@
               <a class="nav-link" href="/users/logout"> Salir</a>
               
             </li>
+           
             {{else}}
             <li class="nav-item">
               <a class="nav-link" href="/users/signin">Login</a>
