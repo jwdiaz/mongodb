@@ -27,4 +27,4 @@ activar el servidor de la base de datos mongo en una terninal aparte y en otra t
 
 
 
-
+he intentado de varios farma y no lobor 

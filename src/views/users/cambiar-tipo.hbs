@@ -1,0 +1,43 @@
+<div class="container p-4">
+    <h2>Cambiar rol de usuarios</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+
+
+            <div class="col-sm-12">
+
+                <p>Documento Identidad : {{  users.documento }} </p>
+
+                <p>Nombre : {{ users.nombre }} </p>
+                <p>Rol actual : {{ users.tipo }} </p>
+
+            </div>
+
+
+
+            <form action="/users/actualizarTipo/{{ users._id }}?_method=PUT" method="post">
+                <div class="container p-4">
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label for="tipo">Seleccionar rol</label>
+                            <select class="form-control" id="tipo" name="tipo">
+                                <option value="Aspirante">Aspirante</option>
+                                <option value="Docente">Docente</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-6">
+                    &nbsp;
+                </div>
+
+                <button type="submit" class="btn btn-primary px-4 float-right">Guardar</button>
+
+            </form>
+        </div>
+    </div>
+</div>

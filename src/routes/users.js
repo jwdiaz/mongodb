@@ -75,4 +75,18 @@ router.put("/users/actualizar/:id", async (req, res) => {
   res.redirect("/users/listar");
 });
 
+router.get("/tipoUsuario/:id", async (req, res) => {
+  const users = await Usuario.findById(req.params.id);
+
+  res.render("users/cambiar-tipo", { users });
+});
+
+router.put("/users/actualizarTipo/:id", async (req, res) => {
+  const { tipo } = req.body;
+  await Usuario.findByIdAndUpdate(req.params.id, { tipo });
+
+  req.flash("success_msg", "Cambio de rol de Usuario  exitoso");
+  res.redirect("/users/listar");
+});
+
 module.exports = router;
