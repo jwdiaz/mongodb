@@ -7,22 +7,18 @@ const User = require('../models/User');
 passport.use(new LocalStrategy({
   usernameField: 'documento'
 }, async (documento, password, done) => {
-  var admin = false; 
-  
-  const use = await User.findOne({documento: documento});
+   
+  const user = await User.findOne({documento: documento});
 
- if(use.tipo ==="Docente"){
-   admin=true;
- }
-
-  if (!use) {
+ 
+  if (!user) {
     return done(null, false, { message: 'Usuario no encontrado.' });
   } else {
     // validacion contraseña de usuario
-    const match = await use.matchPassword(password);
+    const match = await user.matchPassword(password);
     if(match) {
 
-      return done(null, use);
+      return done(null, user);
     } else {
       return done(null, false, { message: ' Contraseña incorrecta.' });
     }
@@ -30,12 +26,12 @@ passport.use(new LocalStrategy({
 
 }));
 
-passport.serializeUser((use, done) => {
-  done(null, use.id);
+passport.serializeUser((user, done) => {
+  done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id, (err, use) => {
-    done(err, use);
+  User.findById(id, (err, user) => {
+    done(err, user);
   });
 });

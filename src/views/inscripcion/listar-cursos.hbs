@@ -1,36 +1,26 @@
 <section class="card">
-    <div class="card-body">
-        <h2>Listar Cursos</h2>
-        <hr />
-        
-            <div class="row">
-                {{#each curso}}
-                <div class="col-md-3">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <a href="/ver-curso/{{idCurso}}">
-                                <h3 class="card-title text-uppercase">
-                                    {{ nombre }}
-                                </h3>
-                            </a>
-                            <p class="m-2">{{descripcion}}</p>
-                            <p class="text-muted">
-                                Inversión: $ {{ valor }}
-                            </p>
-                        </div>
+         <div class="row">
+             <h3>Proceso de inscripción para el aspirante: {{ user.nombre }}, con documento de identificación No. {{ user.documento }} </h3>
+        <div class="col-md-12 mx-auto">
+            <form action="/inscribir/aspirante/{{ user._id }}?_method=PUT" method="post">
+                <div class="form-group row">
+                     <div class="col-sm-6">
+                        <h4>Selecione el curso al cual desea incribirse :</h4>
                     </div>
+                    <div class="col-sm-6">
+                        <input type="hidden" name="_method" value="PUT">
+                        
+                        <select class="form-control" id="idCurso" name="idCurso">
+                            {{#each cursos}}
+                                <option value="{{_id }}">{{nombre}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                   
                 </div>
-                {{else}}
-                    <div class="card mx-auto">
-                        <div class="card-body">
-                            <h1>Actualmente no se encuentran cursos habilidatos.</h1>
-                            <p clsss="lead">Comunicase con secretaria academima para mas información.</p>
-                        </div>
-                    </div>
-
-                {{/each}}
-            </div>
-       
-
+                
+                <button type="submit" class="btn btn-primary px-4 float-right">Incribir</button>
+            </form>
+        </div>
     </div>
 </section>

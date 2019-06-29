@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const passport = require("passport");
+//const {perfil} = require('../helpers/auth');
 
 // Models
 const Usuario = require("../models/User");
@@ -41,7 +42,7 @@ router.get("/users/signin", (req, res) => {
   res.render("users/signin");
 });
 
-router.post("/users/signin", passport.authenticate("local", {
+router.post("/users/signin",passport.authenticate("local", {
     successRedirect: "/ver-cursos",
     failureRedirect: "/users/signin",
     failureFlash: true,
@@ -58,7 +59,7 @@ router.get("/users/logout", (req, res) => {
 router.get("/actualizarUsuario/:id", async (req, res) => {
   const users = await Usuario.findById(req.params.id);
 
-  res.render("users/actualizar-usuario", { users });
+  res.render("users/actualizar", { users });
 });
 
 router.put("/users/actualizar/:id", async (req, res) => {
