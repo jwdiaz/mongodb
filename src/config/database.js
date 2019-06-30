@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 mongoose.set('useFindAndModify', false);
-mongoose.connect('mongodb://localhost/tdea', {
+mongoose.connect((process.env.MONGODB_URI ? process.env.MONGODB_URI : 'mongodb://localhost/tdea'), {
   useCreateIndex: true,
   useNewUrlParser: true
 })
