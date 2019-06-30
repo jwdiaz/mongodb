@@ -1,4 +1,10 @@
 <div class="jumbotron mt-4">
- <h1>Hola, este es el sistema de gestión de cursos del TDEA</h1>
+ {{#if user}}
+ 
+<h1> Bienvenido {{ user.nombre }} a la mejor comunidad educativa del país </h1>
+
+ {{/if}}      
+ <h2>Hola, este es el sistema de gestión de cursos del TDEA</h2>
+
         <p>Utilice los menús en la parte superior para navegar a través de los casos de uso.</p>
 </div>

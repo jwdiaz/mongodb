@@ -3,6 +3,7 @@ const router = express.Router();
 const { isAuthenticated } = require('../helpers/auth');
 // Models
 const Curso = require("../models/Curso");
+const Usuario = require("../models/User");
 
 
 router.get("/cursos", async (req, res) => {
@@ -32,7 +33,7 @@ router.get("/ver-curso/:id", async (req, res) => {
   });
 });
 
-router.get("/ver-cursos", async (req, res) => {
+router.get("/ver-cursos",  isAuthenticated,async (req, res) => {
   const Cursos = await Curso.find();
 
   res.render("cursos/todoscursos", {
@@ -40,7 +41,7 @@ router.get("/ver-cursos", async (req, res) => {
   });
 });
 
-router.get("/estado-cursos/:id", async (req, res) => {
+router.get("/estado-cursos/:id",  isAuthenticated,async (req, res) => {
   const id = req.params.id;
   const Cursos = await Curso.find();
   res.send('ok asiganar estado curso');
@@ -60,7 +61,7 @@ router.get("/actualizarCurso/:id", async (req, res) => {
   res.render("cursos/actualizar-curso", { curso });
 });
 
-router.post("/cursos/new", async (req, res) => {
+router.post("/cursos/new",  isAuthenticated,async (req, res) => {
   const body = req.body;
 
   // Saving a New curso
@@ -93,6 +94,28 @@ router.put("/cursos/actualizar/:id", async (req, res) => {
   res.redirect("/ver-cursos");
 
 });
+
+router.get("/curso/estado/:id/:estad", async (req, res) => {
+  const idcurso = req.params.id;
+  const estadoCurso =  req.params.estad;
+
+  if(estadoCurso=="Disponible"){
+    const docente = await Usuario.find({tipo:"Docente"});
+
+    res.render("cursos/estadoCurso", { docente });
+
+  }else{
+    var estado = "Disponible"
+    await Curso.findByIdAndUpdate(idcurso, { estado });
+    req.flash('success_msg', 'Actualizacion de estado curso exitosa');
+    res.redirect("/ver-cursos");
+
+    //pendiente eliminar el docente que estaba asignado al curso cerrado: :(
+
+  }
+ 
+});
+
 
 
 

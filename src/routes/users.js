@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const passport = require("passport");
 //const {perfil} = require('../helpers/auth');
+const { isAuthenticated } = require('../helpers/auth');
 
 // Models
 const Usuario = require("../models/User");
@@ -9,7 +10,7 @@ router.get("/users/signup", (req, res) => {
   res.render("users/signup");
 });
 
-router.get("/users/listar", async (req, res) => {
+router.get("/users/listar",isAuthenticated, async (req, res) => {
   const users = await Usuario.find();
   res.render("users/listar-usuarios", { users });
 });
@@ -43,7 +44,7 @@ router.get("/users/signin", (req, res) => {
 });
 
 router.post("/users/signin",passport.authenticate("local", {
-    successRedirect: "/ver-cursos",
+    successRedirect: "/",
     failureRedirect: "/users/signin",
     failureFlash: true,
     
@@ -56,13 +57,13 @@ router.get("/users/logout", (req, res) => {
   res.redirect("/users/signin");
 });
 
-router.get("/actualizarUsuario/:id", async (req, res) => {
+router.get("/actualizarUsuario/:id",isAuthenticated, async (req, res) => {
   const users = await Usuario.findById(req.params.id);
 
   res.render("users/actualizar", { users });
 });
 
-router.put("/users/actualizar/:id", async (req, res) => {
+router.put("/users/actualizar/:id",isAuthenticated, async (req, res) => {
   const { documento, nombre, correo, telefono, tipo } = req.body;
   await Usuario.findByIdAndUpdate(req.params.id, {
     documento,
@@ -75,13 +76,13 @@ router.put("/users/actualizar/:id", async (req, res) => {
   res.redirect("/users/listar");
 });
 
-router.get("/tipoUsuario/:id", async (req, res) => {
+router.get("/tipoUsuario/:id",isAuthenticated, async (req, res) => {
   const users = await Usuario.findById(req.params.id);
 
   res.render("users/cambiar-tipo", { users });
 });
 
-router.put("/users/actualizarTipo/:id", async (req, res) => {
+router.put("/users/actualizarTipo/:id",isAuthenticated, async (req, res) => {
   const { tipo } = req.body;
   await Usuario.findByIdAndUpdate(req.params.id, { tipo });
 

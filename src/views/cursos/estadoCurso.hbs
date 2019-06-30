@@ -1,0 +1,38 @@
+<div class="container">
+
+    <h2>Asignación de docente a curso </h2>
+        <hr />
+
+        <div class="row">
+            <div class="col-md-12 mx-auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Documento</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Telefono</th>
+                           
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each docente}}
+                        <tr>
+                            <td scope="row">{{ documento}}</a></td>
+                            <td>{{nombre}}</a></td>
+                            <td>{{ correo }}</td>
+                            <td>{{ telefono }}</td>
+                            
+                            <th scope="row"><a href="/curso/actualizarEstado/{{ _id }}">Asignar</a></th>
+
+                        </tr>
+
+                        {{/each}}
+                    </tbody>
+                </table>
+                <hr />
+            </div>
+
+        </div>
+</div>
