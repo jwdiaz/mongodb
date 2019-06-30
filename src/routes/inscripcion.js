@@ -49,12 +49,12 @@ router.put("/inscribir/aspirante/:idUser", async (req, res) => {
 
 router.get("/inscripcion/misCursos/:idUser", async (req, res) => {
   var idUsuario = req.params.idUser;
-  const misCursos = inscripcion.findOne({ idUser: idUsuario });
-
- // console.log(misCursos);
-
+  const usuario = await Usuario.findOne({ _id: idUsuario });
+  inscrip = await inscripcion.find({ documento: usuario.documento });
+  inscrip = inscrip.map(obj => obj.IdCurso);
+  const cursos = await Curso.find({_id: { $in : inscrip }});
   res.render("inscripcion/misCursos", {
-    misCursos
+    MisCursos: cursos
   });
 
 });
