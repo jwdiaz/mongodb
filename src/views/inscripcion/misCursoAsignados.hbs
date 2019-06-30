@@ -1,0 +1,52 @@
+<div class="container">
+
+    <h2>Cursos asignados al Docente {{ user.nombre }}</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Id Curso</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Intensidad</th>
+                        <th scope="col">Modalidad</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each MisCursos}}
+                    <tr>
+                        <th scope="row"><a href="/ver-curso/{{idCurso}}">{{idCurso}}</a></th>
+
+                        <td><a href="/ver-curso/{{ idCurso }}">{{nombre}}</a></td>
+                        <td>{{descripcion}}</td>
+                        <td>${{valor}}</td>
+                        <td>
+                            {{#if intensidad}}
+                            {{intensidad}} horas
+                            {{/if}}
+                        </td>
+                        <td>{{modalidad}}</td>
+
+                        <th scope="row"><a href="/inscripcion/delete/{{_id}}/{{../idUsuario}}">Eliminar</a></th>
+                    </tr>
+                    {{else}}
+                    <div class="card mx-auto">
+                        <div class="card-body">
+                            <h1>Hola</h1>
+                            <p clsss="lead">Actualmente no tienes cursos inscritos en el sistema.</p>
+                            <a href="/inscribir/aspirante" class="btn btn-success btn-block">Inscribir curso!</a>
+                        </div>
+                    </div>
+                    {{/each}}
+                </tbody>
+            </table>
+            <hr />
+        </div>
+
+    </div>
+</div>

@@ -77,4 +77,22 @@ router.get("/inscripcion/delete/:idCurso/:idUsuario", async (req, res) => {
     });
 });
 
+router.get("/cursos/asignados/:idUser", async (req, res) => {
+  var idUsuario = req.params.idUser;
+  const usuario = await Usuario.findOne({ _id: idUsuario });
+  inscrip = await inscripcion.find({ documento: usuario.documento });
+  inscrip = inscrip.map(obj => obj.IdCurso);
+  const cursos = await Curso.find({_id: { $in : inscrip }});
+
+  console.log(curso);
+
+  res.render("inscripcion/misCursosAsignados", {
+    MisCursos: cursos,
+    idUsuario: idUsuario
+  });
+});
+
+
+
+
 module.exports = router;

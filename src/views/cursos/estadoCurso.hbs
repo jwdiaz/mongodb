@@ -1,38 +1,32 @@
 <div class="container">
 
-    <h2>Asignación de docente a curso </h2>
+    <h2>Asignación de curso a docente </h2>
         <hr />
-
-        <div class="row">
-            <div class="col-md-12 mx-auto">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Documento</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Correo</th>
-                            <th scope="col">Telefono</th>
-                           
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each docente}}
-                        <tr>
-                            <td scope="row">{{ documento}}</a></td>
-                            <td>{{nombre}}</a></td>
-                            <td>{{ correo }}</td>
-                            <td>{{ telefono }}</td>
-                            
-                            <th scope="row"><a href="/curso/actualizarEstado/{{ _id }}">Asignar</a></th>
-
-                        </tr>
-
-                        {{/each}}
-                    </tbody>
-                </table>
-                <hr />
-            </div>
-
+<section class="card">
+         <div class="row">
+             
+        <div class="col-md-12 mx-auto">
+            <form action="/curso/actualizarEstado/{{ miCurso }}?_method=PUT "
+             method="post">
+                <div class="form-group row">
+                     <div class="col-sm-6">
+                        <h4>Selecione el docente al cual se le asignara el curso :</h4>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="hidden" name="_method" value="PUT">
+                        
+                        <select class="form-control" id="idUser" name="idUser">
+                            {{#each docente}}
+                                <option value="{{_id }}"> {{nombre}} : CC: {{ documento }} </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                   
+                </div>
+                
+                <button type="submit" class="btn btn-primary px-4 float-right">Incribir</button>
+            </form>
         </div>
+    </div>
+</section>
 </div>

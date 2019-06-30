@@ -26,5 +26,3 @@ activar el servidor de la base de datos mongo en una terninal aparte y en otra t
  **Contraseña: 0123**
 
 
-
-he intentado de varios farma y no lobor 
