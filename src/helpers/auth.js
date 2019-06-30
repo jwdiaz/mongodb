@@ -8,10 +8,5 @@ helpers.isAuthenticated = (req, res, next) => {
   res.redirect("/users/signin");
 };
 
-helpers.perfil = (req, res, next) => {
-  if (req.user) {
-    console.log("hay usuario");
-  }
-};
 
 module.exports = helpers;

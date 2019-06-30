@@ -39,7 +39,7 @@ router.get("/inscripcion/misCursos/:idUser", async (req, res) => {
   var idUsuario = req.params.idUser;
   const misCursos = inscripcion.findOne({ idUser: idUsuario });
 
-  console.log(misCursos);
+ // console.log(misCursos);
 
   res.render("inscripcion/misCursos", {
     misCursos

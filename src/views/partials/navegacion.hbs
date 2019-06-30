@@ -17,16 +17,16 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         {{#if user}}
-        
-        
+
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-           Aspirante
+            Aspirante
 
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            
+
             <a class="dropdown-item" href="/inscribir/aspirante">Inscripción cursos</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="/inscripcion/misCursos/{{ user._id }}">Mis cursos</a>
@@ -37,7 +37,7 @@
         {{#if tipo }}
 
 
-    
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -57,25 +57,28 @@
           </div>
         </li>
         {{/if }}
-        
-        <span class="navbar-brand  ">Conectado como :  {{ user.nombre }} - Perfil : {{ user.tipo}}.</span>
-      
-          
-            <li class="nav-item">
-              
-              <a class="nav-link" href="/users/logout"> Salir</a>
-              
-            </li>
-           
-            {{else}}
-            <li class="nav-item">
-              <a class="nav-link" href="/users/signin">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/users/signup">Registro</a>
-            </li>
-            {{/if}}
-          </ul>
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Conectado como : {{ user.nombre }} - Perfil : {{ user.tipo}}. <span
+              class="sr-only">(current)</span></a>
+        </li>
+        <span class="navbar-brand  "></span>
+
+
+        <li class="nav-item">
+
+          <a class="nav-link" href="/users/logout"> Salir</a>
+
+        </li>
+
+        {{else}}
+        <li class="nav-item">
+          <a class="nav-link" href="/users/signin">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/signup">Registro</a>
+        </li>
+        {{/if}}
+      </ul>
     </div>
   </div>
 </nav>
