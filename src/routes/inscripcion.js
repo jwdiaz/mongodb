@@ -20,19 +20,31 @@ router.put("/inscribir/aspirante/:idUser", async (req, res) => {
   var idCurso = req.body.idCurso;
   var idUsuario = req.params.idUser;
 
-  const newInscripcion = new inscripcion({
-    IdCurso: idCurso,
-    IdUsers: idUsuario
-  });
-  //  console.log(newInscripcion);
+  usuario = await Usuario.findOne({_id: req.params.idUser});
+  curso = await Curso.findOne({_id: req.body.idCurso});
+  inscr = await inscripcion.find({IdUsers: req.params.idUser, IdCurso: req.body.idCurso});
 
-  await newInscripcion.save(function(err) {
-    if (err) return handleError(err);
+  if(! inscr.length){
+    const newInscripcion = new inscripcion({
+      IdCurso: idCurso,
+      IdUsers: idUsuario,
+      documento: usuario.documento,
+      identificadorCurso: curso.idCurso
+    });
 
-    req.flash("success_msg", "Incripción  exitosa.");
+    await newInscripcion.save(function(err) {
+      if (err) return handleError(err);
 
+      req.flash("success_msg", "Incripción  exitosa.");
+
+      res.redirect("/inscribir/aspirante");
+    });
+  }
+  else{
+    req.flash("error_msg", "Ya el usuario realizó una inscripción al curso seleccionado.");
     res.redirect("/inscribir/aspirante");
-  });
+  }
+
 });
 
 router.get("/inscripcion/misCursos/:idUser", async (req, res) => {
