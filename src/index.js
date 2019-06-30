@@ -46,16 +46,21 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   res.locals.user = req.user || null;
 
+  if( res.locals.user){
+    if(req.user.tipo === "Docente"){
+      res.locals.tipo= true;
+    }
+    
+   
+    console.log( res.locals.tipo);
+  }
+  
+  
   
   next();
 });
 
-app.all('/users/signup',(req, res, next) => {
-  console.log('pasopor aqui')
 
-  
-  next();
-});
 
 // routes
 app.use(require("./routes"));

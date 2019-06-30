@@ -43,7 +43,8 @@ router.get("/users/signin", (req, res) => {
   res.render("users/signin");
 });
 
-router.post("/users/signin",passport.authenticate("local", {
+router.post("/users/login",passport.authenticate("local", {
+  
     successRedirect: "/",
     failureRedirect: "/users/signin",
     failureFlash: true,
@@ -52,6 +53,7 @@ router.post("/users/signin",passport.authenticate("local", {
 );
 
 router.get("/users/logout", (req, res) => {
+  res.locals.tipo = false;
   req.logout();
   req.flash("success_msg", "Estás desconectado ahora.");
   res.redirect("/users/signin");
