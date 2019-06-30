@@ -53,10 +53,28 @@ router.get("/inscripcion/misCursos/:idUser", async (req, res) => {
   inscrip = await inscripcion.find({ documento: usuario.documento });
   inscrip = inscrip.map(obj => obj.IdCurso);
   const cursos = await Curso.find({_id: { $in : inscrip }});
-  res.render("inscripcion/misCursos", {
-    MisCursos: cursos
-  });
 
+  res.render("inscripcion/misCursos", {
+    MisCursos: cursos,
+    idUsuario: idUsuario
+  });
+});
+
+router.get("/inscripcion/delete/:idCurso/:idUsuario", async (req, res) => {
+    var idUsuario = req.params.idUsuario;
+    var idCurso = req.params.idCurso;
+    objectidUsuario = new require('mongoose').Types.ObjectId(idUsuario);
+    objetoidCurso = new require('mongoose').Types.ObjectId(idCurso);
+    inscrip = await inscripcion.deleteOne({ IdCurso: objetoidCurso, IdUsers:  objectidUsuario});
+    const usuario = await Usuario.findOne({ _id: idUsuario });
+    inscrip = await inscripcion.find({ documento: usuario.documento });
+    inscrip = inscrip.map(obj => obj.IdCurso);
+    const cursos = await Curso.find({_id: { $in : inscrip }});
+    req.flash("success_msg", "Se eliminó el registro sin problema.");
+    res.render("inscripcion/misCursos", {
+        MisCursos: cursos,
+        idUsuario: idUsuario
+    });
 });
 
 module.exports = router;
