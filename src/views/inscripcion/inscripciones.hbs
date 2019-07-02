@@ -1,0 +1,60 @@
+<div class="container">
+
+    <h2>Ver Cursos e Inscritos</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="card mx-auto">
+
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Id Curso</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Inscritos</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each Cursos}}
+                    <tr>
+                        <th scope="row"><a href="/ver-curso/{{idCurso}}">{{idCurso}}</a></th>
+
+                        <td><a href="/ver-curso/{{ idCurso }}">{{nombre}}</a></td>
+                        <td>{{descripcion}}</td>
+                        <td>
+                            <ul class='list-group list-group-flush'>
+                                {{#each ../inscripciones as |inscripcion|}}
+                                    {{#ifeq inscripcion.identificadorCurso ../idCurso}}
+                                        {{#each ../../usuarios as |usuario|}}
+                                            {{#ifeq usuario.documento ../documento}}
+                                            <li class='list-group-item'>
+                                                {{usuario.nombre}}
+                                                &nbsp; &nbsp; &nbsp; &nbsp;
+                                                <a class='btn btn-primary btn-sm' href='/inscripcion/eliminar/{{inscripcion._id}}' role='button'>Eliminar</a>
+                                            </li>
+                                            {{/ifeq}}
+                                        {{/each}}
+                                    {{/ifeq}}
+                                {{/each}}
+                            </ul>
+                        </td>
+                    </tr>
+                {{else}}
+                    <div class="card mx-auto">
+                        <div class="card-body">
+                            <h1>Hola</h1>
+                            <p clsss="lead">Actualmente no se encuentran cursos registrados en el sistema.</p>
+                            <a href="/new-curso" class="btn btn-success btn-block">Crear curso!</a>
+                        </div>
+                    </div>
+                {{/each}}
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

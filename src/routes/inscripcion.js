@@ -84,8 +84,6 @@ router.get("/cursos/asignados/:idUser", async (req, res) => {
   inscrip = inscrip.map(obj => obj.IdCurso);
   const cursos = await Curso.find({_id: { $in : inscrip }});
 
-  console.log(curso);
-
   res.render("inscripcion/misCursosAsignados", {
     MisCursos: cursos,
     idUsuario: idUsuario
@@ -93,6 +91,32 @@ router.get("/cursos/asignados/:idUser", async (req, res) => {
 });
 
 
+router.get("/cursos/inscripciones", async (req, res) => {
+
+    const cursos = await Curso.find({});
+    const inscrip = await inscripcion.find({});
+    const usuarios = await Usuario.find({});
+
+    res.render("inscripcion/inscripciones", {
+        Cursos: cursos,
+        inscripciones: inscrip,
+        usuarios: usuarios
+    });
+});
+
+router.get("/inscripcion/eliminar/:id", async (req, res) => {
+    var id = req.params.id;
+    ins = await inscripcion.deleteOne({ _id: id });
+    const cursos = await Curso.find({});
+    const inscrip = await inscripcion.find({});
+    const usuarios = await Usuario.find({});
+
+    res.render("inscripcion/inscripciones", {
+        Cursos: cursos,
+        inscripciones: inscrip,
+        usuarios: usuarios
+    });
+});
 
 
 module.exports = router;
