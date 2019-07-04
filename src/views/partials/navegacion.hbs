@@ -16,74 +16,95 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        {{#if user}}
 
+      {{#if user}}
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Aspirante
+       <li class="nav-item active">
+        <a class="nav-link" href="/">Conectado como : {{ user.nombre }} - Perfil : <span
+            class="sr-only">(current)</span></a>
+      </li>
 
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+       <li class="nav-item dropdown">
+        
+      {{#ifeq user.tipo "Coordinador"}}
 
-            <a class="dropdown-item" href="/inscribir/aspirante">Inscripción cursos</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/inscripcion/misCursos/{{ user._id }}">Mis cursos</a>
+     
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Coordinador
 
-          </div>
-        </li>
-
-        {{#if tipo }}
-
-
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Docente
-
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="/users/listar
+        </a>
+        
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/users/listar
               ">Todos los usuarios
-            </a>
-            <a class="dropdown-item" href="/ver-cursos
+          </a>
+          <a class="dropdown-item" href="/ver-cursos
               ">Todos los cursos
-            </a>
-            
-            <div class="dropdown-divider"></div>
+          </a>
 
-            <a class="dropdown-item" href="/new-curso">Crear curso</a>
-            <div class="dropdown-divider"></div>
+          <div class="dropdown-divider"></div>
 
-            <a class="dropdown-item" href="/cursos/asignados/{{ user._id }}">Mis cursos
-            </a>
+          <a class="dropdown-item" href="/new-curso">Crear curso</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/cursos/inscripciones">Inscripciones</a>
 
-          </div>
-        </li>
-        {{/if }}
-        <li class="nav-item active">
-          <a class="nav-link" href="/">Conectado como : {{ user.nombre }} - Perfil : {{ user.tipo}}. <span
-              class="sr-only">(current)</span></a>
-        </li>
-        <span class="navbar-brand  "></span>
+        </div>
+    
+      {{/ifeq}}
+      {{#ifeq user.tipo "Docente"}}
+     
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Docente
+
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/cursos/asignados/{{ user._id }}">Mis cursos</a>
+
+        </div>
+      
+      {{/ifeq}}
 
 
-        <li class="nav-item">
+      {{#ifeq user.tipo "Aspirante"}}
+     
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Aspirante
 
-          <a class="nav-link" href="/users/logout"> Salir</a>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-        </li>
+          <a class="dropdown-item" href="/inscribir/aspirante">Inscribir cursos</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/inscripcion/misCursos/{{ user._id }}">Mis cursos</a>
 
-        {{else}}
-        <li class="nav-item">
-          <a class="nav-link" href="/users/signin">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/users/signup">Registro</a>
-        </li>
-        {{/if}}
+        </div>
+      
+      {{/ifeq}}
+      </li>
+
+      
+      <span class="navbar-brand  "></span>
+
+
+      <li class="nav-item">
+
+        <a class="nav-link" href="/users/logout"> Salir</a>
+
+      </li>
+
+      {{else}}
+      <li class="nav-item">
+        <a class="nav-link" href="/users/signin">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/signup">Registro</a>
+      </li>
+      {{/if}}
       </ul>
     </div>
   </div>

@@ -114,7 +114,7 @@ router.get("/curso/estado/:id/:estad", async (req, res) => {
   const estadoCurso = req.params.estad;
 
   res.locals.miCurso = req.params.id;
-  console.log("local 1 " + res.locals.miCurso);
+  
 
   if (estadoCurso == "Disponible") {
     const docente = await Usuario.find({ tipo: "Docente" });

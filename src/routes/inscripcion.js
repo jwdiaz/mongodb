@@ -83,16 +83,40 @@ router.get("/cursos/asignados/:idUser", async (req, res) => {
   inscrip = await inscripcion.find({ documento: usuario.documento });
   inscrip = inscrip.map(obj => obj.IdCurso);
   const cursos = await Curso.find({_id: { $in : inscrip }});
+  const inscripciones = await inscripcion.find({});
+  const aspirantes = await Usuario.find({});
 
-  console.log(curso);
 
-  res.render("inscripcion/misCursosAsignados", {
-    MisCursos: cursos,
-    idUsuario: idUsuario
+  res.render("inscripcion/misCursoAsignados", {
+    Cursos: cursos,
+        inscripciones: inscripciones,
+        usuarios: aspirantes
   });
 });
 
 
+router.get("/cursos/inscripciones", async (req, res) => {
+
+    const cursos = await Curso.find({});
+    const inscrip = await inscripcion.find({});
+    const usuarios = await Usuario.find({});
+
+    res.render("inscripcion/inscripciones", {
+        Cursos: cursos,
+        inscripciones: inscrip,
+        usuarios: usuarios
+    });
+});
+
+router.get("/inscripcion/eliminar/:id", async (req, res) => {
+    var id = req.params.id;
+     await inscripcion.deleteOne({ _id: id });
+
+    req.flash("success_msg", "Incripción  eliminada con exito.");
+
+    res.redirect("/cursos/inscripciones");
+   
+});
 
 
 module.exports = router;

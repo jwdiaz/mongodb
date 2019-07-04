@@ -10,42 +10,53 @@
                     <tr>
                         <th scope="col">Id Curso</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Valor</th>
-                        <th scope="col">Intensidad</th>
-                        <th scope="col">Modalidad</th>
+                        <th scope="col">Documento.   Estudiante.    Email     Telefono:</th>
+                       
+                        
+
 
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each MisCursos}}
+
+                    {{#each Cursos}}
                     <tr>
                         <th scope="row"><a href="/ver-curso/{{idCurso}}">{{idCurso}}</a></th>
 
                         <td><a href="/ver-curso/{{ idCurso }}">{{nombre}}</a></td>
-                        <td>{{descripcion}}</td>
-                        <td>${{valor}}</td>
-                        <td>
-                            {{#if intensidad}}
-                            {{intensidad}} horas
-                            {{/if}}
-                        </td>
-                        <td>{{modalidad}}</td>
 
-                        <th scope="row"><a href="/inscripcion/delete/{{_id}}/{{../idUsuario}}">Eliminar</a></th>
+                        <td>
+                            <ul class='list-group list-group-flush'>
+                                {{#each ../inscripciones as |inscripcion|}}
+                                {{#ifeq inscripcion.identificadorCurso ../idCurso}}
+                                {{#each ../../usuarios as |usuario|}}
+                                {{#ifeq usuario.documento ../documento}}
+                                <li class='list-group-item'>
+                                     {{usuario.documento}} &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                    {{usuario.nombre}} &nbsp; &nbsp;&nbsp;
+                                    {{usuario.correo}} &nbsp;&nbsp;&nbsp;
+                                    {{usuario.telefono}}&nbsp; &nbsp;
+
+                                </li>
+                                {{/ifeq}}
+                                {{/each}}
+                                {{/ifeq}}
+                                {{/each}}
+                            </ul>
+                        </td>
                     </tr>
                     {{else}}
                     <div class="card mx-auto">
                         <div class="card-body">
                             <h1>Hola</h1>
-                            <p clsss="lead">Actualmente no tienes cursos inscritos en el sistema.</p>
-                            <a href="/inscribir/aspirante" class="btn btn-success btn-block">Inscribir curso!</a>
+                            <p clsss="lead">Actualmente no se encuentran cursos registrados en el sistema.</p>
+                            <a href="/new-curso" class="btn btn-success btn-block">Crear curso!</a>
                         </div>
                     </div>
                     {{/each}}
+
                 </tbody>
             </table>
-            <hr />
         </div>
 
     </div>

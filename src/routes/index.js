@@ -10,10 +10,10 @@ router.get('/',async (req, res) => {
     const newUser = new Usuario({
       documento: "123456",
       nombre: "Coordinador",
-      correo: "admin@tdea.com",
+      correo: "admin1@tdea.com",
       telefono: "00000",
       password: "0123",
-      tipo: "Docente"
+      tipo: "Coordinador"
     });
     newUser.password = await newUser.encryptPassword("0123");
     await newUser.save();

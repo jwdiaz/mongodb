@@ -17,7 +17,8 @@ app.engine(
     defaultLayout: "main",
     layoutsDir: path.join(app.get("views"), "layouts"),
     partialsDir: path.join(app.get("views"), "partials"),
-    extname: ".hbs"
+    extname: ".hbs",
+    helpers: require('./helpers/hbs-helpers')
   })
 );
 
@@ -45,11 +46,6 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   res.locals.user = req.user || null;
 
-  if (res.locals.user) {
-    if (req.user.tipo === "Docente") {
-      res.locals.tipo = true;
-    }
-  }
 
   next();
 });

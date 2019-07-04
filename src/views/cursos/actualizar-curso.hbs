@@ -38,18 +38,16 @@
                     </div>
                     <div class="col-sm-6">
                         <label for="intensidadHoraria">Intensidad Horaria (horas)</label>
-                        <input type="text" class="form-control" id="intensidadHoraria" value = "{{ curso.intesidad }}" name="intensidadHoraria"
-                            placeholder="Intensidad Horaria">
+                        <input type="number" class="form-control" id="intensidadHoraria" name="intensidadHoraria"
+                         value = "{{ curso.intensidad }}"   placeholder="Intensidad horaria">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <label for="modalidad">Estado</label>
-                        <select class="form-control" id="estado" name="estado"> 
-                            <option value="Disponible">Disponible</option>
-                            <option value="Cerrado">Cerrado</option>
-                        </select>
+                        <label for="estado">Estado</label>
+                       <input type="text" class="form-control" id="estado" name= "estado" value = "{{ curso.estado}}" readonly="readonly">
                     </div>
+                    
                    </div> 
                 <button type="submit" class="btn btn-primary px-4 float-right">Guardar</button>
             </form>

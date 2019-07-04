@@ -92,4 +92,10 @@ router.put("/users/actualizarTipo/:id",isAuthenticated, async (req, res) => {
   res.redirect("/users/listar");
 });
 
+router.get("/user/delete/:id", async (req, res) => {
+  await Usuario.findByIdAndRemove(req.params.id);
+  req.flash("success_msg", "aspirante eliminado con exito.");
+  res.redirect("/users/listar");
+});
+
 module.exports = router;
