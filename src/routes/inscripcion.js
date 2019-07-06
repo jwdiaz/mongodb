@@ -84,7 +84,7 @@ router.get("/cursos/asignados/:idUser", async (req, res) => {
   inscrip = inscrip.map(obj => obj.IdCurso);
   const cursos = await Curso.find({_id: { $in : inscrip }});
   const inscripciones = await inscripcion.find({});
-  const aspirantes = await Usuario.find({});
+  const aspirantes = await Usuario.find({tipo: "Aspirante"});
 
 
   res.render("inscripcion/misCursoAsignados", {
@@ -99,7 +99,7 @@ router.get("/cursos/inscripciones", async (req, res) => {
 
     const cursos = await Curso.find({});
     const inscrip = await inscripcion.find({});
-    const usuarios = await Usuario.find({});
+    const usuarios = await Usuario.find({tipo: "Aspirante"});
 
     res.render("inscripcion/inscripciones", {
         Cursos: cursos,

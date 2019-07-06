@@ -11,7 +11,7 @@ router.get("/users/signup", (req, res) => {
 });
 
 router.get("/users/listar",isAuthenticated, async (req, res) => {
-  const users = await Usuario.find();
+  const users = await Usuario.find({tipo:{$ne:"Coordinador"}});
   res.render("users/listar-usuarios", { users });
 });
 

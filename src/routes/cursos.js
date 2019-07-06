@@ -152,11 +152,11 @@ router.put("/curso/actualizarEstado/:idCurso", async (req, res) => {
     await newInscripcion.save(function(err) {
       if (err) return handleError(err);
 
-      req.flash("success_msg", "Asignacion de curso exitosa  exitosa.");
+      req.flash("success_msg", "Asignación de curso exitosa.");
     });
     var estado = "Cerrado";
     await Curso.findByIdAndUpdate(idCurso, { estado });
-    req.flash("success_msg", "Actualizacion de estado curso exitosa");
+    req.flash("success_msg", "Actualización de estado curso exitosa");
     res.redirect("/ver-cursos");
   } else {
     req.flash(
