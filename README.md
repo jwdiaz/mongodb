@@ -1,5 +1,15 @@
 # Nodejs_reds
 segunda entrega TDEA Virtual Node.JS
+
+**https://curso-node-tdea-grupal.herokuapp.com/**
+
+el sistema por defecto contiene el usuario  coordinador 
+
+ **documento: 123456**
+ **Contraseña: 0123**
+
+  
+  
   
 Antes de iniciar, correr el comando **npm install**, esto instalara las dependencias necesarias.
 
@@ -10,19 +20,5 @@ Antes de iniciar, correr el comando **npm install**, esto instalara las dependen
 
 
 
-
-
-
-# Correr el servidor para desarrollo ?
-
-activar el servidor de la base de datos mongo en una terninal aparte y en otra terminal ejecutar
-
-
-**npm run dev** y luego ingresar a **http://localhost:3000** 
-
- el sistema por defecto contiene el usuario  coordinador 
-
- **documento: 123456**
- **Contraseña: 0123**
 
 
