@@ -6,6 +6,9 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
 require("./config/database");
 require("./config/passport");
 
@@ -21,6 +24,15 @@ app.engine(
     helpers: require('./helpers/hbs-helpers')
   })
 );
+
+io.on('connection', client =>{
+  console.log('un usuario se ha conectado');
+
+  client.on("texto",(text)=>{
+    console.log(text)
+    io.emit("texto",text)
+  })
+});
 
 app.set("view engine", ".hbs");
 
@@ -58,6 +70,6 @@ app.use(require("./routes/inscripcion"));
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.listen(app.get("port"), () => {
+server.listen(app.get("port"), () => {
   console.log("Escuchando puerto ", app.get("port"));
 });

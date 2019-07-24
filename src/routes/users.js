@@ -98,4 +98,9 @@ router.get("/user/delete/:id", async (req, res) => {
   res.redirect("/users/listar");
 });
 
+router.get("/users/chat", (req, res) => {
+ 
+  res.render("users/chat");
+});
+
 module.exports = router;
