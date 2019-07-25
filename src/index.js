@@ -24,13 +24,23 @@ app.engine(
     helpers: require('./helpers/hbs-helpers')
   })
 );
-
+let contador = 0;
 io.on('connection', client =>{
   console.log('un usuario se ha conectado');
+  client.emit('mensaje', "bienvenidos a la sala de chat")
+  client.on('mensaje',(informacion) => {
+    console.log(informacion);
+});
+client.on("contador",()=>{
+  contador++
+  console.log(contador)
+  io.emit('contador',contador)
+})
 
-  client.on("texto",(text)=>{
+  client.on("texto",(text,callback)=>{
     console.log(text)
-    io.emit("texto",text)
+    io.emit("texto",(text))
+    callback()
   })
 });
 
