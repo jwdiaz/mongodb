@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const passport = require("passport");
+
 //const {perfil} = require('../helpers/auth');
 const { isAuthenticated } = require('../helpers/auth');
 
@@ -98,9 +99,19 @@ router.get("/user/delete/:id", async (req, res) => {
   res.redirect("/users/listar");
 });
 
-router.get("/users/chat", (req, res) => {
+router.get("/users/chat/:nick",isAuthenticated, (req, res) => {
  
+
+
   res.render("users/chat");
 });
+
+router.get("/users/salachat",isAuthenticated, (req, res) => {
+ 
+
+
+  res.render("users/salaChat");
+});
+
 
 module.exports = router;

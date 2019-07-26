@@ -1,40 +1,13 @@
-<div class="container" id="contentWrap">
-    <div class="row mt-5">
-        <div class="col-md-6 offset-md-1">
-            <div class="card">
-                <div class="card-header">
-                    <h4> Chat</h3>
-                </div>
-                <div id="chat" class="card-body"></div>
-                <form id="formulario" class="card-footer">
-
-                    <div class="input-group">
-
-                        <input type="hidden" id="nombre" name="nombre" value="{{  user.nombre }} ">
-
-
-                        <input type="text" id="texto" class="form-control" />
-
-
-
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary">
-                                <i class="fas fa-location-arrow"></i> Enviar
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header">
-                <h3>Usuarios</h3>
-            </div>
-            <div class="card-body">
-                <div id="usernames"></div>
-            </div>
-        </div>
+<div id="nickWrap" class="card col-md-4 mx-auto mt-5">
+      <div class="card-header">
+        <h3>Ingrese su Nickname</h3>
+      </div>
+      <p id="nickError"></p>
+      <div class="card-body">
+        <form id="FormUser"action="/users/salachat" method="get">
+          <input id="nickname" name = "nickname" type="text" value = "{{ user.nombre }}"class="form-control" readonly="readonly">
+          <input type="submit" class="btn btn-secondary btn-block mt-2"/>
+        </form>
+      </div>
     </div>
 
-</div>
