@@ -5,15 +5,22 @@ const usuarios = new UsuariosChat();
 module.exports = function (io){
 
 io.on("connection", client => {
-   
-    
+
+
+      client.on("enviarInvitacion", (info) => {
+        if(info){
+            io.emit('enviarInvitacion', info);
+        }
+      });
+
+
      client.on("usuarioNuevo", (usuario) => {
        if(usuario){
       let listado = usuarios.agregar(client.id,usuario);
        //console.log(listado)
        let text = 'Se ha conectado '+ usuario;
        //console.log(text)
-       io.emit('nuevoUsuario',text)
+       io.emit('nuevoUsuario', usuario )
        }
      });
 
@@ -32,5 +39,12 @@ io.on("connection", client => {
        io.emit("texto", (text))
        callback()
      });
+
+        client.on("textoPrivado", (text, callback) => {
+
+            io.emit("textoPrivado", (text))
+            callback()
+        });
+
    });
 }

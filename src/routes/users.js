@@ -100,18 +100,18 @@ router.get("/user/delete/:id", async (req, res) => {
 });
 
 router.get("/users/chat/:nick",isAuthenticated, (req, res) => {
- 
-
-
   res.render("users/chat");
 });
 
 router.get("/users/salachat",isAuthenticated, (req, res) => {
- 
-
-
   res.render("users/salaChat");
 });
 
+router.get("/users/chat-privado/:nick",isAuthenticated, (req, res) => {
+  usuario = req.params.nick;
+  res.render("users/salaChatPrivada", {
+    nick: usuario
+  });
+});
 
 module.exports = router;
