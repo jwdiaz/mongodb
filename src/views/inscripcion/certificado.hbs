@@ -1,0 +1,29 @@
+<div class="container">
+
+    <h2>Subir Certificado</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <form action="/inscripcion/subir-certificado" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <div align="left"> <label for="usuario">Usuario: </label></div>
+                    <input type="text" class="form-control" name="usuario" value="{{ usuario.nombre }}" readonly>
+                    <input type="hidden" name="id_usuario" value="{{ usuario._id }}">
+                </div>
+                <div class="form-group">
+                    <div align="left"> <label for="curso">Curso: </label></div>
+                    <input type="text" class="form-control" name="curso" value="{{ curso.nombre }}" readonly>
+                    <input type="hidden" name="id_curso" value="{{ curso._id }}">
+                </div>
+                <div class="form-group">
+                    <div align="left"> <label for="certificado">Certificado: </label></div>
+                    <input type="file" name="certificado" id="certificado">
+                </div>
+                <button class="btn btn-primary btn-block">
+                    Subir
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

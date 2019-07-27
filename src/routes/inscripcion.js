@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Usuario = require("../models/User");
 const inscripcion = require("../models/Inscritos");
+const Certificado = require("../models/Certificado");
 const Curso = require("../models/Curso");
 const sgMail = require('@sendgrid/mail');
 
@@ -68,6 +69,75 @@ router.get("/inscripcion/misCursos/:idUser", async (req, res) => {
     MisCursos: cursos,
     idUsuario: idUsuario
   });
+});
+
+router.get("/inscripcion/certificado/:idCurso/:idUsuario", async (req, res) => {
+    var idUsuario = req.params.idUsuario;
+    var idCurso = req.params.idCurso;
+
+    usuario = await Usuario.findOne({_id: idUsuario});
+    curso = await Curso.findOne({_id: idCurso});
+    res.render("inscripcion/certificado", {
+        curso: curso,
+        usuario: usuario
+    });
+});
+
+var multer = require('multer')({
+    dest: 'public/archivos'
+});
+var fs = require('fs');
+var path = require('path');
+var util = require('util');
+
+function almacenar (archivo, insc) {
+    var fullNewPath = path.join(archivo.destination, "documento_inscripcion_" + insc.IdCurso + "_" + insc.IdUsers + path.extname(archivo.originalname));
+    var rename = util.promisify(fs.rename)
+    return rename(archivo.path, fullNewPath)
+        .then(() => {
+
+            cert = new Certificado({
+                inscripcion:  insc._id,
+                rutaCertificado: fullNewPath,
+                fechaSubida: new Date()
+            });
+            cert.save();
+            return archivo.originalname
+        })
+}
+
+router.post("/inscripcion/subir-certificado", [multer.single('certificado')], async (req, res, next) => {
+    var idUsuario = req.body.id_usuario;
+    var idCurso = req.body.id_curso;
+
+    usuario = await Usuario.findOne({_id: idUsuario});
+    curso = await Curso.findOne({_id: idCurso});
+
+    inscrip = await inscripcion.findOne({IdUsers: idUsuario, IdCurso: idCurso});
+    cert = await Certificado.findOne({inscripcion: inscrip._id});
+    if(cert == null){
+        return almacenar(req.file, inscrip)
+            .then(encodeURIComponent)
+            .then(encoded => {
+                req.flash("success_msg", "Se guardo el certificado sin problema.");
+                res.render("inscripcion/certificado", {
+                    curso: curso,
+                    usuario: usuario,
+                    success_msg: "Se guardo el certificado sin problema."
+                });
+            })
+            .catch(next)
+    }
+    else{
+        req.flash("error_msg", "Ya subio un certificado para el curso seleccionado.");
+        res.render("inscripcion/certificado", {
+            curso: curso,
+            usuario: usuario,
+            error_msg: "Ya subio un certificado para el curso seleccionado."
+        });
+    }
+
+
 });
 
 router.get("/inscripcion/delete/:idCurso/:idUsuario", async (req, res) => {
