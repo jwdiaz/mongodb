@@ -6,8 +6,8 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 const app = express();
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
 
 require("./config/database");
 require("./config/passport");
@@ -21,28 +21,10 @@ app.engine(
     layoutsDir: path.join(app.get("views"), "layouts"),
     partialsDir: path.join(app.get("views"), "partials"),
     extname: ".hbs",
-    helpers: require('./helpers/hbs-helpers')
+    helpers: require("./helpers/hbs-helpers")
   })
 );
-let contador = 0;
-io.on('connection', client =>{
-  console.log('un usuario se ha conectado');
-  client.emit('mensaje', "bienvenidos a la sala de chat")
-  client.on('mensaje',(informacion) => {
-    console.log(informacion);
-});
-client.on("contador",()=>{
-  contador++
-  console.log(contador)
-  io.emit('contador',contador)
-})
 
-  client.on("texto",(text,callback)=>{
-    console.log(text)
-    io.emit("texto",(text))
-    callback()
-  })
-});
 
 app.set("view engine", ".hbs");
 
@@ -68,7 +50,6 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   res.locals.user = req.user || null;
 
-
   next();
 });
 
@@ -79,6 +60,8 @@ app.use(require("./routes/cursos"));
 app.use(require("./routes/inscripcion"));
 
 app.use(express.static(path.join(__dirname, "public")));
+// WEBSOCKET IO 
+require('./socketio')(io);
 
 server.listen(app.get("port"), () => {
   console.log("Escuchando puerto ", app.get("port"));

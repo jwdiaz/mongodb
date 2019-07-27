@@ -1,3 +1,18 @@
+<script type="text/javascript">
+function ConfirmDel() {
+//Ingresamos un mensaje a mostrar
+var mensaje = confirm("¿Estas seguro que deseas eliminar el usuario?");
+//Detectamos si el usuario acepto el mensaje
+if (mensaje) {
+return true;
+}
+//Detectamos si el usuario denegó el mensaje
+else {
+return false;
+}
+}
+</script>
+
 <div class="container">
 
     <h2>Usuarios </h2>
@@ -25,7 +40,7 @@
                             <td>{{ telefono }}</td>
                             <th scope="row"><a href="/tipoUsuario/{{ _id }}">{{ tipo }}</a></th>
                             <th scope="row"><a href="/actualizarUsuario/{{ _id }}">Actualizar</a></th>
-                             <th scope="row"><a href="/user/delete/{{ _id}}">Eliminar</a></th>
+                             <th scope="row"><a href="/user/delete/{{ _id}}" onclick = "return ConfirmDel()">Eliminar</a></th>
 
                         </tr>
 
