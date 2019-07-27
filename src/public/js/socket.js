@@ -76,7 +76,8 @@ if(formulario != null){
         "texto",
         {
           nick: nick,
-          mensaje: texto
+          mensaje: texto,
+          privado: false
         },
         () => {
           mensaje.value = "";
@@ -91,14 +92,14 @@ if(formulario_privado != null) {
     datos.preventDefault();
     const texto = datos.target.elements.texto.value;
     const nick = datos.target.elements.nick.value;
-
     const hacia = $("#hacia").val();
       socket.emit(
         "textoPrivado",
         {
-          nick: hacia,
+          nick: nick,
           mensaje: texto,
-          desde: nick
+          desde: hacia,
+          privado: true
         },
         () => {
           mensaje.value = "";
@@ -110,7 +111,7 @@ if(formulario_privado != null) {
 }
 
 socket.on("textoPrivado", text => {
-    if(text.nick.trim() == usuarioAc.value.trim() || text.desde.trim() == usuarioAc.value.trim()){
+    if(text.nick.trim() == usuarioAc.value.trim() || text.desde.trim() == usuarioAc.value.trim() && text.privado && formulario == null){
         chat.innerHTML =
             chat.innerHTML +
             "<strong>" +
@@ -122,13 +123,15 @@ socket.on("textoPrivado", text => {
 });
 
 socket.on("texto", text => {
-  chat.innerHTML =
-    chat.innerHTML +
-    "<strong>" +
-    text.nick +
-    "</strong>: <em>" +
-    text.mensaje +
-    "</em><br>";
+    if(formulario != null && ! text.privado){
+        chat.innerHTML =
+            chat.innerHTML +
+            "<strong>" +
+            text.nick +
+            "</strong>: <em>" +
+            text.mensaje +
+            "</em><br>";
+    }
 });
 
 
