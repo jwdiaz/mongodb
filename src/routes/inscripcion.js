@@ -46,14 +46,17 @@ router.put("/inscribir/aspirante/:idUser", async (req, res) => {
       req.flash("success_msg", "Incripción  exitosa.");
 
       sgMail.setApiKey(process.env.SENDGRID_API_KEY ? process.env.SENDGRID_API_KEY : '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');
+      
       const msg = {
         from: 'inscripcion-cursos@cursos.edu.co',
         to: usuario.correo,
         subject: 'Inscripción Satisfactoria',
         html: 'Hola <b>' + usuario.nombre + '</b><br/><br/>' + 'Se realizo correctamente la inscricpión al curso <b>' + curso.nombre + '</b> con intensidad horaria ' + curso.intensidad + ' horas, valor $' + curso.valor + ' y modalidad ' + curso.modalidad + '.<br/><br/> Ten un buen día.<br/><br/> Ate, Administración Plataforma' ,
       };
+
       sgMail.send(msg).then((sent) => {
       });
+
       res.redirect("/inscribir/aspirante");
     });
   }

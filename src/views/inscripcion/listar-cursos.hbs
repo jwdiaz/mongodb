@@ -1,6 +1,8 @@
 <section class="card">
          <div class="row">
-             <h3>Proceso de inscripción para el aspirante: {{ user.nombre }}, con documento de identificación No. {{ user.documento }} </h3>
+             <h5>Proceso de inscripción para el aspirante: {{ user.nombre }},</h5>
+                 <h5>con documento de identificación No. {{ user.documento }} </h5>
+                 <br>  <br>
         <div class="col-md-12 mx-auto">
             <form action="/inscribir/aspirante/{{ user._id }}?_method=PUT" method="post">
                 <div class="form-group row">

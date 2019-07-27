@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const passport = require("passport");
-
+const sgMail = require("@sendgrid/mail");
 //const {perfil} = require('../helpers/auth');
-const { isAuthenticated } = require('../helpers/auth');
+const { isAuthenticated } = require("../helpers/auth");
 
 // Models
 const Usuario = require("../models/User");
@@ -11,8 +11,8 @@ router.get("/users/signup", (req, res) => {
   res.render("users/signup");
 });
 
-router.get("/users/listar",isAuthenticated, async (req, res) => {
-  const users = await Usuario.find({tipo:{$ne:"Coordinador"}});
+router.get("/users/listar", isAuthenticated, async (req, res) => {
+  const users = await Usuario.find({ tipo: { $ne: "Coordinador" } });
   res.render("users/listar-usuarios", { users });
 });
 
@@ -44,12 +44,12 @@ router.get("/users/signin", (req, res) => {
   res.render("users/signin");
 });
 
-router.post("/users/login",passport.authenticate("local", {
-  
+router.post(
+  "/users/login",
+  passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/users/signin",
-    failureFlash: true,
-    
+    failureFlash: true
   })
 );
 
@@ -60,13 +60,13 @@ router.get("/users/logout", (req, res) => {
   res.redirect("/users/signin");
 });
 
-router.get("/actualizarUsuario/:id",isAuthenticated, async (req, res) => {
+router.get("/actualizarUsuario/:id", isAuthenticated, async (req, res) => {
   const users = await Usuario.findById(req.params.id);
 
   res.render("users/actualizar", { users });
 });
 
-router.put("/users/actualizar/:id",isAuthenticated, async (req, res) => {
+router.put("/users/actualizar/:id", isAuthenticated, async (req, res) => {
   const { documento, nombre, correo, telefono, tipo } = req.body;
   await Usuario.findByIdAndUpdate(req.params.id, {
     documento,
@@ -79,13 +79,13 @@ router.put("/users/actualizar/:id",isAuthenticated, async (req, res) => {
   res.redirect("/users/listar");
 });
 
-router.get("/tipoUsuario/:id",isAuthenticated, async (req, res) => {
+router.get("/tipoUsuario/:id", isAuthenticated, async (req, res) => {
   const users = await Usuario.findById(req.params.id);
 
   res.render("users/cambiar-tipo", { users });
 });
 
-router.put("/users/actualizarTipo/:id",isAuthenticated, async (req, res) => {
+router.put("/users/actualizarTipo/:id", isAuthenticated, async (req, res) => {
   const { tipo } = req.body;
   await Usuario.findByIdAndUpdate(req.params.id, { tipo });
 
@@ -94,20 +94,44 @@ router.put("/users/actualizarTipo/:id",isAuthenticated, async (req, res) => {
 });
 
 router.get("/user/delete/:id", async (req, res) => {
+
+  usuario = await Usuario.findOne({ _id: req.params.id });
+
+  sgMail.setApiKey(
+    process.env.SENDGRID_API_KEY
+      ? process.env.SENDGRID_API_KEY
+      : "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"
+  );
+
+
+  const msg = {
+    from: "cursosteda@cursos.edu.co",
+    to: usuario.correo,
+    subject: "Eliminacion-TDEA",
+    html:
+      "Hola <b>" +
+      usuario.nombre +
+      "</b><br/><br/>" +
+      "El sistema le informa que su proceso en la plataforma educativa Gestión Cursos TDEA ha finalizado. <b>" +
+      "<br/><br/> Ten un buen día.<br/><br/> Ate, Administración Plataforma"
+  };
+  //console.log(msg)
+  sgMail.send(msg);
+
   await Usuario.findByIdAndRemove(req.params.id);
   req.flash("success_msg", "aspirante eliminado con exito.");
   res.redirect("/users/listar");
 });
 
-router.get("/users/chat/:nick",isAuthenticated, (req, res) => {
+router.get("/users/chat/:nick", isAuthenticated, (req, res) => {
   res.render("users/chat");
 });
 
-router.get("/users/salachat",isAuthenticated, (req, res) => {
+router.get("/users/salachat", isAuthenticated, (req, res) => {
   res.render("users/salaChat");
 });
 
-router.get("/users/chat-privado/:nick",isAuthenticated, (req, res) => {
+router.get("/users/chat-privado/:nick", isAuthenticated, (req, res) => {
   usuario = req.params.nick;
   res.render("users/salaChatPrivada", {
     nick: usuario
