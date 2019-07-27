@@ -5,6 +5,12 @@ const inscripcion = require("../models/Inscritos");
 const Certificado = require("../models/Certificado");
 const Curso = require("../models/Curso");
 const sgMail = require('@sendgrid/mail');
+var multer = require('multer')({
+    dest: 'public/archivos'
+});
+var fs = require('fs');
+var path = require('path');
+var util = require('util');
 
 router.get("/inscribir/aspirante", async (req, res) => {
   const cursos = await Curso.find({
@@ -83,12 +89,7 @@ router.get("/inscripcion/certificado/:idCurso/:idUsuario", async (req, res) => {
     });
 });
 
-var multer = require('multer')({
-    dest: 'public/archivos'
-});
-var fs = require('fs');
-var path = require('path');
-var util = require('util');
+
 
 function almacenar (archivo, insc) {
     var fullNewPath = path.join(archivo.destination, "documento_inscripcion_" + insc.IdCurso + "_" + insc.IdUsers + path.extname(archivo.originalname));
@@ -106,6 +107,31 @@ function almacenar (archivo, insc) {
         })
 }
 
+router.get("/inscripcion/ver_certificado/:idInscripcion", async (req, res) => {
+    var idInscripcion = req.params.idInscripcion;
+
+    certificado = await Certificado.findOne({inscripcion: idInscripcion});
+    if(certificado == null){
+        const cursos = await Curso.find({});
+        const inscrip = await inscripcion.find({});
+        const usuarios = await Usuario.find({tipo: "Aspirante"});
+
+        res.render("inscripcion/inscripciones", {
+            Cursos: cursos,
+            inscripciones: inscrip,
+            usuarios: usuarios,
+            error_msg: "El usuario no ha subido aún el certificado para el curso seleccionado."
+        });
+    }
+    else{
+        fs.readFile(path.dirname(require.main.filename).replace("src", "") + certificado.rutaCertificado , function (err,data){
+            res.contentType("application/pdf");
+            res.send(data);
+        });
+    }
+
+});
+
 router.post("/inscripcion/subir-certificado", [multer.single('certificado')], async (req, res, next) => {
     var idUsuario = req.body.id_usuario;
     var idCurso = req.body.id_curso;
@@ -115,7 +141,21 @@ router.post("/inscripcion/subir-certificado", [multer.single('certificado')], as
 
     inscrip = await inscripcion.findOne({IdUsers: idUsuario, IdCurso: idCurso});
     cert = await Certificado.findOne({inscripcion: inscrip._id});
-    if(cert == null){
+    if(! req.file){
+        res.render("inscripcion/certificado", {
+            curso: curso,
+            usuario: usuario,
+            error_msg: "Debe seleccionar un archivo."
+        });
+    }
+    else if(path.extname(req.file.originalname) != ".pdf"){
+        res.render("inscripcion/certificado", {
+            curso: curso,
+            usuario: usuario,
+            error_msg: "Solo se admiten archivos pdf."
+        });
+    }
+    else if(cert == null){
         return almacenar(req.file, inscrip)
             .then(encodeURIComponent)
             .then(encoded => {
